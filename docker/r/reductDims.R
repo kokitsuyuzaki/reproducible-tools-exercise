@@ -56,9 +56,3 @@ plotDims <- function(out){
 	plot(out$pca$u[,1:2], main="PCA", xlab="Dim1", ylab="Dim2", pch=16)
 	plot(out$tsne$Y, main="t-SNE", xlab="Dim1", ylab="Dim2", pch=16)
 }
-
-# Test
-input <- matrix(runif(50*100), nrow=50, ncol=100)
-out <- reductDims(input, dim_pca=10, dim_tsne=2, dim_umap=2,
-	type_pca="svd", verbose=TRUE)
-plotDims(out)
