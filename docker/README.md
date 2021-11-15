@@ -1,4 +1,10 @@
 # Docker
+## 目次
+- [準備](https://github.com/kokitsuyuzaki/reproducible-tools-exercise/tree/main/docker#準備)
+- [Dockerとは](https://github.com/kokitsuyuzaki/reproducible-tools-exercise/tree/main/docker#dockerとは)
+- [他人が作ったDockerを使う](https://github.com/kokitsuyuzaki/reproducible-tools-exercise/tree/main/docker#他人が作ったdockerを使う)
+- [Dockerイメージを自作する（Dockerfile）](https://github.com/kokitsuyuzaki/reproducible-tools-exercise/tree/main/docker#dockerイメージを自作するdockerfile)
+- [Snakemakeとの連携](https://github.com/kokitsuyuzaki/reproducible-tools-exercise/tree/main/docker#snakemakeとの連携)
 
 ## 準備
   - Docker for Macをインストール: https://www.docker.com
@@ -39,7 +45,7 @@
       - Dockerは常駐プログラム（デーモン）
           - まずdocker.appを立ち上げて、それに対して処理を要求する構図
 
-## 他人の作ったDockerを使う
+## 他人が作ったDockerを使う
   - イメージをDockerHubから取得
       - コマンドツール（例: salmon）: https://combine-lab.github.io/salmon/getting_started/#obtaining-salmon
 
