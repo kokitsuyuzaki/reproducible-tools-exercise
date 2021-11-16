@@ -54,22 +54,22 @@
 - **イメージをDockerHubから取得**
     - コマンドツール（例: salmon）: https://combine-lab.github.io/salmon/getting_started/#obtaining-salmon
 
-          ```bash
-          docker pull combinelab/salmon:latest
-          ```
+      ```bash
+      docker pull combinelab/salmon:latest
+      ```
 
     - コマンド/対話解析ツール（例: R）
         - Docker containers for Bioconductor: https://www.bioconductor.org/help/docker/
 
-              ```bash
-              docker pull bioconductor/bioconductor_docker:RELEASE_3_14
-              ```
+          ```bash
+          docker pull bioconductor/bioconductor_docker:RELEASE_3_14
+          ```
 
         - rocker/rstudio: https://hub.docker.com/r/rocker/rstudio
 
-              ```bash
-              docker pull rocker/rstudio:4.1.2
-              ```
+          ```bash
+          docker pull rocker/rstudio:4.1.2
+          ```
 
 - **イメージ一覧**
 
@@ -99,32 +99,32 @@
 
 - **コンテナ一覧**
 
-    ```bash
-    docker ps
-    docker run -e PASSWORD=<choose_a_password_for_rstudio> -p 8787:8787 rocker/rstudio:4.1.2
-    docker ps # 別のターミナル画面で確認
-    ```
+```bash
+docker ps
+docker run -e PASSWORD=<choose_a_password_for_rstudio> -p 8787:8787 rocker/rstudio:4.1.2
+docker ps # 別のターミナル画面で確認
+```
 
 - **いらないものを削除する系**
 
-      ```bash
-      docker rm $(docker ps -q -a) # コンテナを停止
-      docker rmi $(docker images -q) -f # イメージを削除
-      # いらないものを適宜削除
-      docker image prune -f
-      docker container prune -f
-      docker volume prune -f
-      docker network prune -f
-      docker builder prune -f
-      # 現在の状況確認
-      docker system df
-      ```
+```bash
+docker rm $(docker ps -q -a) # コンテナを停止
+docker rmi $(docker images -q) -f # イメージを削除
+# いらないものを適宜削除
+docker image prune -f
+docker container prune -f
+docker volume prune -f
+docker network prune -f
+docker builder prune -f
+# 現在の状況確認
+docker system df
+```
 
 - **履歴系**
 
-      ```bash
-      docker history [イメージID]
-      ```
+  ```bash
+  docker history [イメージID]
+  ```
 
 ## Dockerイメージを自作する（Dockerfile）
 - **Dockerfileの作り方**
@@ -161,6 +161,7 @@
 - **動作確認**
     - `docker run`の後に、コンテナ内部で実行するコマンドを続けて書く
     - 実例: 次元圧縮手法の公開
+
     ```bash
     R -e 'input <- matrix(runif(50*100), nrow=50, ncol=100); write.csv(input, "input.csv")' && docker run \
     -it --rm -v $(pwd):/work koki/reductdims Rscript cmd_reductDims.R \
@@ -184,12 +185,12 @@
     - cf. https://speakerdeck.com/inutano/describe-data-analysis-workflow-with-workflow-languages
     - 良いタグ名が思いつかなかったら、単に日付でも良い気がする
 
-          ```bash
-          docker login -u koki
-          img=`docker images | grep koki/pca | awk '{print $3}'`
-          docker tag $img koki/pca:$(date '+%Y%m%d')
-          docker push koki/pca:$(date '+%Y%m%d')
-          ```
+      ```bash
+      docker login -u koki
+      img=`docker images | grep koki/pca | awk '{print $3}'`
+      docker tag $img koki/pca:$(date '+%Y%m%d')
+      docker push koki/pca:$(date '+%Y%m%d')
+      ```
 
 - **Dockerfileの書き方についてのTips**
   - 書き方次第でイメージファイルサイズに違いが出る
