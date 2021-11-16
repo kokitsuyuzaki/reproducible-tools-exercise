@@ -53,6 +53,10 @@ reductDims <- function(input, dim_pca=10, dim_tsne=2,
 # Visualization Function
 plotDims <- function(out){
 	layout(t(1:2))
-	plot(out$pca$u[,1:2], main="PCA", xlab="Dim1", ylab="Dim2", pch=16)
-	plot(out$tsne$Y, main="t-SNE", xlab="Dim1", ylab="Dim2", pch=16)
+	plot(out$pca$u[,1:2], main="PCA",
+		xlab="Dim1", ylab="Dim2",
+		col=rgb(0,0,1), pch=16)
+	plot(out$tsne$Y, main="t-SNE",
+		xlab="Dim1", ylab="Dim2",
+		col=rgb(0,0,1), pch=16)
 }
