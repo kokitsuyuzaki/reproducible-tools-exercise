@@ -12,12 +12,21 @@ reductDims <- function(input, dim_pca=10, dim_tsne=2,
 	scaled_input <- .initreductDims(input)
 	# PCA
 	if(type_pca == "svd"){
+		if(verbose){
+			message("SVD (svd) is performing...")
+		}
 		out_PCA <- svd(scaled_input, nu=dim_pca, nv=dim_pca)
 	}
 	if(type_pca == "irlba"){
+		if(verbose){
+			message("SVD (irlba) is performing...")
+		}
 		out_PCA <- irlba(scaled_input, nu=dim_pca, nv=dim_pca)
 	}
 	# t-SNE
+	if(verbose){
+		message("t-SNE is performing...")
+	}
 	out_tsne <- Rtsne(out_PCA$u, dims=dim_tsne, perplexity=10)
 	# Output
 	list(pca=out_PCA, tsne=out_tsne)

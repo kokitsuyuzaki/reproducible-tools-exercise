@@ -3,16 +3,16 @@
 - [準備](https://github.com/kokitsuyuzaki/reproducible-tools-exercise/tree/main/docker#準備)
 - [Dockerとは](https://github.com/kokitsuyuzaki/reproducible-tools-exercise/tree/main/docker#dockerとは)
 - [DockerHubとは](https://github.com/kokitsuyuzaki/reproducible-tools-exercise/tree/main/docker#dockerhubとは)
-- [他人が作ったDockerを使う](https://github.com/kokitsuyuzaki/reproducible-tools-exercise/tree/main/docker#他人が作ったdockerを使う)
+- [他人が作ったDockerイメージを使う](https://github.com/kokitsuyuzaki/reproducible-tools-exercise/tree/main/docker#他人が作ったdockerイメージを使う)
 - [Dockerイメージを自作する（Dockerfile）](https://github.com/kokitsuyuzaki/reproducible-tools-exercise/tree/main/docker#dockerイメージを自作するdockerfile)
 - [Snakemakeとの連携](https://github.com/kokitsuyuzaki/reproducible-tools-exercise/tree/main/docker#snakemakeとの連携)
 
 ## 準備
-- Docker for Macをインストール: https://www.docker.com
+- [Docker for Mac](https://www.docker.com)をインストール
 - docker.appを起動
 - ターミナルで`docker -v`が動くか確認
 - （オプショナル）重い計算をする場合や、データが大きくなることが予想される場合、割り当てるディスク容量・メモリ使用量を変更
-    - cf. https://github.com/yyoshiaki/ikra#for-mac-users
+    - cf. [ikra](https://github.com/yyoshiaki/ikra#for-mac-users)
 
 ## Dockerとは
 - **仮想化技術の一つ**
@@ -26,15 +26,15 @@
         - 重すぎるので配布に向かない、配布を目的としていない
         - 環境構築に時間がかかりすぎ、使い捨てに向いていない
     - コンテナエンジン
-        - DockerHub/Quey.ioにあるイメージを取得して、実行するコマンド
+        - DockerHub/Quay.ioにあるイメージを取得して、実行するコマンド
         - uDocker, Podman, Shifter, CharileCloud...など、複数存在（主に管理者権限のポリシーの違いによる）
         - Singularity
-            - HTC環境に適したDocker（後述）
+            - High-throughput Computing（HTC）環境に適したDocker（後述）
             - Snakemakeと連携（後述）
 - **その他注意点**
     - イメージとコンテナの違い
-        - イメージ: コンテナを作るもととなるもの、実体としてはファイル
-        - コンテナ: 走らせているイメージのインスタンス、実体としてはプロセス
+        - **イメージ**: コンテナを作るもととなるもの、実体としてはファイル
+        - **コンテナ**: 走らせているイメージのインスタンス、実体としてはプロセス
         - イメージのことを"コンテナイメージ"と言う場合もある
     - Dockerは常駐プログラム（デーモン）
         - まずdocker.appを立ち上げて、それに対して処理を要求する構図
@@ -44,28 +44,28 @@
     - **DockerHub**
         - Dockerコンテナを集めるレポジトリ: https://hub.docker.com
         - Dockerのアカウントでログインできる
-        - 無料: 月ごとのプル数に制限あり https://www.docker.com/pricing
-    - **Quey.io**
+        - 無料: 時間ごとのプル数に制限あり https://www.docker.com/pricing
+    - **Quay.io**
         - RED HATが提供するレポジトリ: https://quay.io
-        - BiocondaはQuey派
+        - BiocondaはQuay派
         - 有料: https://quay.io/plans/
 
-## 他人が作ったDockerを使う
+## 他人が作ったDockerイメージを使う
 - **イメージをDockerHubから取得**
-    - コマンドツール（例: salmon）: https://combine-lab.github.io/salmon/getting_started/#obtaining-salmon
+    - コマンドツール: [salmon](https://combine-lab.github.io/salmon/getting_started/#obtaining-salmon)
 
       ```bash
       docker pull combinelab/salmon:latest
       ```
 
     - コマンド/対話解析ツール（例: R）
-        - Docker containers for Bioconductor: https://www.bioconductor.org/help/docker/
+        - [Docker containers for Bioconductor](https://www.bioconductor.org/help/docker/)
 
           ```bash
           docker pull bioconductor/bioconductor_docker:RELEASE_3_14
           ```
 
-        - rocker/rstudio: https://hub.docker.com/r/rocker/rstudio
+        - [rocker/rstudio](https://hub.docker.com/r/rocker/rstudio)
 
           ```bash
           docker pull rocker/rstudio:4.1.2
@@ -90,8 +90,7 @@
           ```
 
     - Anacondaに登録されているRパッケージ（CRAN/Bioconductor）は、BioContainersがDockerイメージ化してくれている
-        - ただし、そのパッケージしか入っていない
-        - cf. https://bioconda.github.io/recipes/bioconductor-sctensor/README.html
+        - ただし、そのパッケージしか入っていない（cf. [bioconductor-sctensor](https://bioconda.github.io/recipes/bioconductor-sctensor/README.html)）
 
           ```bash
           docker run -it --rm -v $(pwd):/work quay.io/biocontainers/bioconductor-sctensor:2.4.0--r41hdfd78af_0 bash
@@ -124,6 +123,7 @@ docker system df
 
   ```bash
   docker history [イメージID]
+  docker logs [コンテナID]
   ```
 
 ## Dockerイメージを自作する（Dockerfile）
@@ -139,12 +139,12 @@ docker system df
       - Alpine系は簡素すぎて、いろいろ足りないので、データサイエンスには向かない
       - おすすめベースイメージ
           - できるだけ必要なツールが事前にインストールされている環境を選ぶ
-          - Rocker系: https://hub.docker.com/search?q=rocker&type=image
-          - Bioconductor: https://hub.docker.com/r/bioconductor/bioconductor_docker
-          - Bioconda/BioContainers（ただし該当パッケージが1個入っているだけ）: https://bioconda.github.io/recipes/bioconductor-sctensor/README.html
-          - Miniconda3: Snakemakeが推奨 https://snakemake.readthedocs.io/en/stable/snakefiles/deployment.html#ad-hoc-combination-of-conda-package-management-with-containers
+          - [Rocker系](https://hub.docker.com/search?q=rocker&type=image)
+          - [Bioconductor](https://hub.docker.com/r/bioconductor/bioconductor_docker)
+          - [Bioconda/BioContainers](https://bioconda.github.io/recipes/bioconductor-sctensor/README.html)（ただし該当パッケージが1個入っているだけ）
+          - [Miniconda3](https://snakemake.readthedocs.io/en/stable/snakefiles/deployment.html#ad-hoc-combination-of-conda-package-management-with-containers): Snakemakeが推奨
   - イメージの作りこみ方
-      - コンテナ内部に取り込まないファイルは**.dockerignore**に記述（e.g. update_dockerfile.sh）
+      - コンテナ内部に取り込まないファイルは **.dockerignore** に記述（e.g. update_dockerfile.sh）
           - 何も考えるデータ解析しているディレクトリで`docker build`してはいけない（データもコードも何もかもコンテナ内部に取り込もうとする）
       - Dockerfile自体はGitHubで一箇所に集めておくのがおすすめ
           - cf. https://github.com/kokitsuyuzaki/Dockerfiles
@@ -163,8 +163,9 @@ docker system df
     - 実例: 次元圧縮手法の公開
 
     ```bash
-    R -e 'input <- matrix(runif(50*100), nrow=50, ncol=100); write.csv(input, "input.csv")' && docker run \
-    -it --rm -v $(pwd):/work koki/reductdims Rscript cmd_reductDims.R \
+    R -e 'input <- matrix(runif(50*100), nrow=50, ncol=100); write.csv(input, "input.csv")'
+    docker run -it --rm -v $(pwd):/work \
+    koki/reductdims Rscript cmd_reductDims.R \
     /work/input.csv \
     10 \
     2 \
@@ -177,19 +178,19 @@ docker system df
 
 - **DockerHubにプッシュ**
   - タグ名の付け方
-    - 大文字のアルファベットは使えない（e.g. koki/MyTool → koki/mytool）
+    - 大文字のアルファベットは使えない（e.g. × koki/MyTool → ○ koki/mytool）
     - latestタグは使わない
-        - latestタグは、DockerHub側が最新のイメージに対してのみ付ける特殊なタグ名
+        - latestタグは、最新のイメージに自動的に付けられる特殊なタグ名
         - ローカルのイメージにlatestタグをつけてしまうと、古いイメージが上書きされてしまう、後でデバッグしづらい
-    - もとのソースコードがGitHub上にある場合、gitのコミットID/タグ名などをdockerのタグ名にする
+    - もとのソースコードがGitHub上にある場合、gitのコミットID、リリース名、タグ名などをdockerのタグ名にする
     - cf. https://speakerdeck.com/inutano/describe-data-analysis-workflow-with-workflow-languages
     - 良いタグ名が思いつかなかったら、単に日付でも良い気がする
 
       ```bash
       docker login -u koki
-      img=`docker images | grep koki/pca | awk '{print $3}'`
-      docker tag $img koki/pca:$(date '+%Y%m%d')
-      docker push koki/pca:$(date '+%Y%m%d')
+      img=`docker images | grep koki/reductdims | awk '{print $3}'`
+      docker tag $img koki/reductdims:$(date '+%Y%m%d')
+      docker push koki/reductdims:$(date '+%Y%m%d')
       ```
 
 - **Dockerfileの書き方についてのTips**
@@ -206,10 +207,17 @@ docker system df
     - 通常は、共同計算機上ではdockerコマンドは使えない（e.g. 遺伝研スパコン）
     - 管理者権限がいらない（root lessな）dockerが欲しい → Singularity
     - イメージは.simgという拡張子のファイルとして、手元に落とされる
-    - singularityコマンドが使える環境であれば、`singularity shell *.simg ...`で、イメージファイルを実行できる
-    - cf. 遺伝研スパコンの資料: https://sc.ddbj.nig.ac.jp/software/Singularity
+    - `singularity`コマンドが使える環境であれば、イメージファイルを実行できる
+
+      ```bash
+      singularity pull salmon.simg docker://combinelab/salmon:latest
+      singularity shell salmon.simg # Singularityイメージファイルに入る
+      singularity exec salmon.simg salmon -v # salmonを実行
+      ```
+
+    - cf. [遺伝研スパコンの資料](https://sc.ddbj.nig.ac.jp/software/Singularity)
     - DockerHub側が更新されても、それを認識してpullし直すことはないのに注意
-    - 毎回 rm -rf .snakemake/singularityをすること
+    - 毎回`rm -rf .snakemake/singularity`をすること
     - 逆に管理者権限が無いせいで、コンテナ内部でできない作業が出る場合もあるので、環境作りこみはdockerのほうがやりやすい気がする（私見）
 - **Snakefileの書き方**
     - condaは再現性がとれない場合があるのでSingualrity推奨: https://gist.github.com/kokitsuyuzaki/c24656f277a8fba8242d698349514421
