@@ -83,13 +83,13 @@ git pull
 
 ```bash
 echo ".DS_Store" > .gitignore
-echo "._" >> .gitignore
+echo "._*" >> .gitignore
 ```
 
 ### Push関係
 - ローカルレポジトリをリモートに反映
 - `add`は、ステージング領域に登録
-- `commit`は、ステージング領域からGitディレクトリ（.git）に登録
+- `commit`は、ステージング領域からGitディレクトリ（`.git`）に登録
 
 ```bash
 # 更新対象を指定、ステージング領域に変更履歴を登録
@@ -182,12 +182,15 @@ git push --set-upstream origin [ブランチ名]
 ```
 
 ### Tag
-- ある変更履歴に対して、わかりやすい名前を付ける（v1.0, 変更した内容など）
+- ある変更履歴に対して、人が見てわかりやすい名前を付ける（v1.0, 変更した内容など）
 - ローカルでつけたタグは、GitHub上で確認できる
 - cf. https://github.com/kokitsuyuzaki/reproducible-tools-exercise-r/tags
 
 ```bash
 git tag -a [タグ名] -m [メッセージ文]
+git add --all
+git commit -m [メッセージ]
+git push --tags
 ```
 
 ### コンフリクト
@@ -270,7 +273,7 @@ git tag -a [タグ名] -m [メッセージ文]
 
 ## `gh`コマンド集
 - `git`はリモートと連携せずとも、それ自体がバージョン管理のツールとして成立している
-- `git`の`push`先のレポジトリは複数（GitHub, GitLab, GitBeckect...etc）
+- `git`の`push`先のレポジトリは複数（GitHub, GitLab, BitBucket...etc）
 - レポジトリごとにやれることは微妙に異なる
 - つまり、`git`コマンドが、あらゆるレポジトリの操作を支援するのは得策ではない、そうあるべきでもない
 - `gh`コマンドは、GitHubの操作により特化したコマンドを提供する、GitHub公式のCLI
