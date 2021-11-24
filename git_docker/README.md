@@ -1,13 +1,13 @@
 # Git × Docker
 ## 目次
-- [XXX](XXXXX)
-- [XXX](XXXXX)
-- [XXX](XXXXX)
-- [XXX](XXXXX)
-- [XXX](XXXXX)
-- [XXX](XXXXX)
-- [XXX](XXXXX)
-- [XXX](XXXXX)
+- [準備](https://github.com/kokitsuyuzaki/reproducible-tools-exercise/tree/main/git_docker#準備)
+- [`git`コマンドとは](https://github.com/kokitsuyuzaki/reproducible-tools-exercise/tree/main/git_docker#`git`コマンドとは)
+- [GitHubとは](https://github.com/kokitsuyuzaki/reproducible-tools-exercise/tree/main/git_docker#GitHubとは)
+- [`gh`コマンドとは](https://github.com/kokitsuyuzaki/reproducible-tools-exercise/tree/main/git_docker#`gh`コマンドとは)
+- [`git`コマンド集](https://github.com/kokitsuyuzaki/reproducible-tools-exercise/tree/main/git_docker#`git`コマンド集)
+- [GitHub上での操作](https://github.com/kokitsuyuzaki/reproducible-tools-exercise/tree/main/git_docker#GitHub上での操作)
+- [`gh`コマンド集](https://github.com/kokitsuyuzaki/reproducible-tools-exercise/tree/main/git_docker#`gh`コマンド集)
+- [Git⇄Docker連携によるツール公開](https://github.com/kokitsuyuzaki/reproducible-tools-exercise/tree/main/git_docker#gitdocker連携によるツール公開)
 
 ## 準備
 - **`git`コマンド**
@@ -16,7 +16,7 @@
 - **GitHubアカウント**
 	- 無ければ作成: https://github.co.jp
 	- SSH認証の設定も必要
-	- 最近、個人アクセストークの設定も必要
+	- 最近、個人アクセストークン（PAT）の設定も必要
 		- 頻繁に変更することが推奨されているパスワードみたいなもの
 - **`gh`コマンド**
 	- 無ければ、`brew install gh`
@@ -372,16 +372,16 @@ gh gist delete d2f3e11b27f7d9f1c4072cbec8df5af8
 - `curl`かDockerfileの`ADD`タグで取得
 - `docker build`で作ったDockerイメージをDockerHubにプッシュ
 
-### 2. DockerHubの自動ビルド機能（[有料](https://docs.docker.com/docker-hub/builds/)）
+### 2. DockerHubの自動ビルド機能（[有料プランのみ](https://docs.docker.com/docker-hub/builds/)）
 1. Dockerfileの置き場所: **GitHub**
 2. ビルドを誰がやるか: **DockerHub**
 3. Dockerイメージのホスト先: **DockerHub**
 #### 手順
 - 自前のスクリプトをGitHubに置く
 - DockerfileもGitHub上に置く
-- DockerHubにDockerfileを認識させる
+- DockerHubのサイト上でDockerfileを認識させる + 各種設定
 - Dockerfileの変更がトリガーとなり、自動的にDockerHubにプッシュ
-- 自分でdocker pushしない分楽
+- 自分で毎回docker pushしない分楽
 
 ### 3. 2.をGitHub Actionsで行ったもの
 1. Dockerfileの置き場所: **GitHub**
@@ -401,7 +401,7 @@ gh gist delete d2f3e11b27f7d9f1c4072cbec8df5af8
 - GitHub Packages Registry（GPR）とは別のサービス
 - ユーザー側からは、`docker pull ghcr.io/GitHubアカウント名/イメージ名:バージョン'として、普通に使える
 #### 手順
-- XXXXXX
-- XXXXXX
-- XXXXXX
-- XXXXXX
+- 自前のスクリプトをGitHubに置く
+- DockerfileもGitHub上に置く
+- GitHub ActionsでDockerイメージを作成し、GHCRにプッシュ
+- cf. [reproducible-tools-exercise-r](https://github.com/kokitsuyuzaki/reproducible-tools-exercise-r), [cwl-log-generator](https://github.com/inutano/cwl-log-generator)
