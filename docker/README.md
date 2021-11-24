@@ -44,11 +44,14 @@
     - **DockerHub**
         - Dockerコンテナを集めるレポジトリ: https://hub.docker.com
         - Dockerのアカウントでログインできる
-        - 無料: 時間ごとのプル数に制限あり https://www.docker.com/pricing
+        - 無料: 時間ごとのプル数や6ヶ月利用がないイメージは削除など、制限が多い https://www.docker.com/pricing
     - **Quay.io**
         - RED HATが提供するレポジトリ: https://quay.io
         - BiocondaはQuay派
-        - 有料: https://quay.io/plans/
+        - 無料: https://quay.io/plans/
+    - **GHCR**
+        - 割と最近できたGitHubのレポジトリ
+        - 無料: https://github.com/pricing
 
 ## 他人が作ったDockerイメージを使う
 - **イメージをDockerHubから取得**
