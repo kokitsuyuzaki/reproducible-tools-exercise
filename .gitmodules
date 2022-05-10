@@ -1,0 +1,3 @@
+[submodule "r_package/reductDims"]
+	path = r_package/reductDims
+	url = https://github.com/kokitsuyuzaki/reductDims.git
